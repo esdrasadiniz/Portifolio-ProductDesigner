@@ -2,40 +2,6 @@
     position: fixed;
     top: 40px;
     width: 100%;
+    z-index: 100;
 }
 
-.menu {
-    display: flex;
-    justify-content: space-between;
-    background-color: #171717;
-    font-family: "Poppins" , sans-serif;
-    font-size: 20px;
-    height: 86px;
-    width: 1298px;
-    box-sizing: border-box;
-    align-items: center;
-    border-radius: 50px;
-    margin: auto;
-    padding: 12px;
-}
-
-.menu .menu-button {
-    line-height: 66px;
-    color: white;
-    text-decoration: none;
-    padding: 0 40px;
-    border-radius: 50px;
-}
-
-.menu .menu-button:hover {
-    background-color: #444;
-}
-
-.menu .menu-button:active {
-    background-color: #FD853A;
-}
-
-
-.menu .menu-button.active {
-    background-color: #FD853A;
-}

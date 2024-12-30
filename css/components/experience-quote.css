@@ -1,0 +1,16 @@
+.experience-quote {
+    line-height: 26px;
+    text-align: end;
+}
+    
+.experience-quote::before {
+    content: url(../../assets/img/stars.png);
+    position: absolute;
+    top: -60px;
+}
+
+.experience-quote .title {
+    font-family: "Urbanist", sans-serif;
+    font-size: 42px;
+    font-weight: 700;
+}

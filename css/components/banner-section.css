@@ -1,0 +1,51 @@
+.-banner-section .banner-photo{
+    height: 660px;
+    position: absolute;
+    bottom: 0;
+}
+
+.-banner-section .main-title {
+    position: absolute;
+    z-index: -1;
+    top: 116px;
+    text-align: center;
+}
+
+.-banner-section .main-title::after{
+    content: url(../../assets/img/Vector\ 1.png);
+    position: absolute;
+    transform: rotate(190deg) scale(2.2);
+    left: -46px;
+    bottom: -90px;
+}
+
+.-banner-section .text-box {
+    margin-top: 55px;
+    position: relative;
+}
+
+.-banner-section .text-box::after {
+    content: url(../../assets/img/Vector\ 1.png);
+    position: absolute;
+    position: absolute;
+    right: -30px;
+    top: -20px;
+}
+
+.-banner-section .quote-up {
+    position: absolute;
+    left: 140px;
+    top: 435px;
+}
+
+.-banner-section .experience-quote {
+    position: absolute;
+    right: 144px;
+    top: 443px;
+}
+
+.-banner-section .banner-nav {
+    position: absolute;
+    bottom: 30px;
+    z-index: 2;
+}

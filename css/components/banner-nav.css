@@ -1,0 +1,75 @@
+/* From Uiverse.io by Xtenso */ 
+.banner-nav {
+    border: 2px solid #FFF;
+    border-radius: 50px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    height: 82px;
+    width: 367px;
+    overflow: hidden;
+    box-sizing: border-box ;
+    padding: 10px 10px;
+    backdrop-filter: blur(8px);
+  }
+  .banner-nav input {
+    display: none;
+  }
+  .banner-nav .option {
+    flex: 1;
+    text-align: center;
+    cursor: pointer;
+    border: none;
+    border-radius: 30px;
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+    transition: ;
+    font-weight: 300;
+    font-size: 25px;
+  }
+  .banner-nav .option a {
+    color: #FFF;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  /*.banner-nav .option.-option1 a {
+    justify-content: start;
+  }
+*/
+  /*
+  .banner-nav .option.-option2 a {
+    justify-content: end;
+  }
+*/
+  .banner-nav .option a img {
+    display: none;
+  }
+  
+  .banner-nav .background {
+    position: absolute;
+    width: 58%;
+    height: 90%;
+    background-color: #FD853A;
+    top: 3.75px;
+    left: 5px;
+    border-radius: 50px;
+    transition: left 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  }
+
+  .active {
+    display: flex;
+    box-sizing: border-box;
+    width: 200px;
+    color: #FFF;
+    font-weight: 500;
+    font-size: 27px;
+    justify-content: center;
+  }
+
+  #option2:hover ~ .background {
+    left: 40.9%;
+  }

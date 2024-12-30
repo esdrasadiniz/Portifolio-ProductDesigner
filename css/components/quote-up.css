@@ -1,0 +1,9 @@
+.quote-up {
+    line-height: 26px;
+}
+
+.quote-up::before {
+    content: url(../../assets/img/quote-up.png);
+    position: absolute;
+    top: -60px;
+}

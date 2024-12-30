@@ -1,0 +1,14 @@
+.main-title {
+    font-family: "Urbanist", sans-serif;
+    font-size: 95px;
+    font-weight: 600;
+    letter-spacing: -1.5%;
+}
+
+.orange-text {
+    color: #FD853A;
+}
+
+.main-title.-quote {
+    font-size: 40px;
+}
