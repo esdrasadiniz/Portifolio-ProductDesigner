@@ -35,7 +35,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: all 0.25s linear;
+    transition: all 80ms linear;
   }
 
   .banner-nav .option a img {
