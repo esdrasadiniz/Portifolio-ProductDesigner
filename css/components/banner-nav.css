@@ -36,15 +36,6 @@
     justify-content: center;
   }
 
-  /*.banner-nav .option.-option1 a {
-    justify-content: start;
-  }
-*/
-  /*
-  .banner-nav .option.-option2 a {
-    justify-content: end;
-  }
-*/
   .banner-nav .option a img {
     display: none;
   }
