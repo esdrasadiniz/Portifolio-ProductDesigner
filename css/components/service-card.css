@@ -25,7 +25,7 @@
   }
   
   /* Conteúdo da card */
-  .content {
+  .service-card .content {
     display: flex;
     position: relative;
     padding: 20px;
@@ -34,7 +34,7 @@
     flex-direction: column;
   }
   
-  .content .title {
+  .service-card .content .title {
     font-size: 32px;
     color: white;
     height: 100px;
@@ -44,7 +44,7 @@
     
   }
 
-  .content .title::after {
+  .service-card .content .title::after {
     position: absolute;
     top: 120px;
     left: 0;
@@ -56,7 +56,7 @@
 
   
   /* Ícone */
-  .icon {
+  .service-card .icon {
     position: absolute;
     bottom: 20px;
     right: 20px;
