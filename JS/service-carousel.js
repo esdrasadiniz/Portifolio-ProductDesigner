@@ -1,129 +1,125 @@
-document.addEventListener('DOMContentLoaded', () => {
-    const carousel = document.querySelector('.service-carousel');
-    const track = document.querySelector('.service-carousel .track');
-    const cards = document.querySelectorAll('.service-card');
-    const indicatorsContainer = document.querySelector('.carousel-indicators');
+document.addEventListener("DOMContentLoaded", () => {
+    const carousel = document.querySelector(".service-carousel");
+    const track = carousel.querySelector(".track");
+    const cards = track.querySelectorAll(".service-card");
+    const indicatorsContainer = carousel.querySelector(".carousel-indicators");
 
+    const cardWidth = cards[0].offsetWidth + 30; // Card width + gap
+    let currentIndex = 0;
+    let intervalId;
+
+    // Variables for drag functionality
     let isDragging = false;
     let startX = 0;
     let currentTranslate = 0;
-    let prevTranslate = 0;
-    let cardIndex = 0;
-    let autoPlayInterval = null;
-    let autoPlayPaused = false;
+    let previousTranslate = 0;
+    let animationFrameId;
+    let isAutoplayPaused = false;
+    let autoplayTimeout;
 
-    const cardWidth = cards[0].offsetWidth + parseInt(getComputedStyle(track).gap);
+    // Duplicate cards for infinite loop effect
+    cards.forEach((card) => {
+        const clone = card.cloneNode(true);
+        track.appendChild(clone);
+    });
 
-    const setTranslate = (translate) => {
-        track.style.transform = `translateX(${translate}px)`;
-    };
+    // Create indicators (dots)
+    cards.forEach((_, index) => {
+        const indicator = document.createElement("div");
+        indicator.classList.add("indicator");
+        if (index === 0) indicator.classList.add("active");
+        indicator.addEventListener("click", () => {
+            clearInterval(intervalId);
+            updateCarousel(index);
+            startAutoplay();
+        });
+        indicatorsContainer.appendChild(indicator);
+    });
 
-    const enableTransition = () => {
-        track.style.transition = 'transform 0.5s ease';
-    };
+    const updateCarousel = (index) => {
+        currentIndex = index;
+        track.style.transform = `translateX(-${currentIndex * cardWidth}px)`;
 
-    const disableTransition = () => {
-        track.style.transition = 'none';
-    };
-
-    const alignToCard = (index) => {
-        currentTranslate = -(index * cardWidth);
-        setTranslate(currentTranslate);
-        updateIndicators(index);
-    };
-
-    const updateIndicators = (activeIndex) => {
-        const indicators = document.querySelectorAll('.carousel-indicators .indicator');
-        indicators.forEach((indicator, index) => {
-            indicator.classList.toggle('active', index === activeIndex);
+        // Update dots
+        document.querySelectorAll(".indicator").forEach((indicator, i) => {
+            indicator.classList.toggle("active", i === currentIndex);
         });
     };
 
-    const createIndicators = () => {
-        cards.forEach((_, index) => {
-            const indicator = document.createElement('div');
-            indicator.classList.add('indicator');
-            if (index === 0) indicator.classList.add('active'); // Ativar o primeiro por padrão
-            indicator.addEventListener('click', () => {
-                enableTransition();
-                cardIndex = index;
-                alignToCard(cardIndex);
-            });
-            indicatorsContainer.appendChild(indicator);
-        });
-    };
-
-    const nextCard = () => {
-        if (cardIndex === cards.length - 1) {
-            // Quando o terceiro cartão for exibido, volte imediatamente ao primeiro
-            cardIndex = 0;
-            disableTransition(); // Desativa a transição para um "pulo" suave
-            alignToCard(cardIndex);
-            requestAnimationFrame(() => enableTransition()); // Reativa a transição após alinhar
-        } else {
-            cardIndex++;
-            enableTransition();
-            alignToCard(cardIndex);
-        }
-    };
-
-    const startAutoPlay = () => {
-        if (autoPlayInterval) return; // Evita múltiplos intervals
-        autoPlayInterval = setInterval(() => {
-            if (!autoPlayPaused) nextCard();
+    const startAutoplay = () => {
+        if (isAutoplayPaused) return; // Prevent multiple intervals
+        intervalId = setInterval(() => {
+            currentIndex = (currentIndex + 1) % cards.length;
+            updateCarousel(currentIndex);
         }, 3000);
     };
 
-    const stopAutoPlay = () => {
-        clearInterval(autoPlayInterval);
-        autoPlayInterval = null;
+    const stopAutoplay = () => {
+        clearInterval(intervalId);
+        isAutoplayPaused = true;
     };
 
-    const onMouseDown = (event) => {
+    // Drag functionality
+    const handleTouchStart = (e) => {
         isDragging = true;
-        startX = event.pageX - currentTranslate;
-        disableTransition();
-        stopAutoPlay(); // Pausa o auto-play ao arrastar
-        autoPlayPaused = true; // Marca como pausado
+        startX = e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
+        previousTranslate = -currentIndex * cardWidth;
+        cancelAnimationFrame(animationFrameId);
+        track.style.transition = "none"; // Disable smooth transition during drag
+        stopAutoplay();
+        clearTimeout(autoplayTimeout);
     };
 
-    const onMouseMove = (event) => {
+    const handleTouchMove = (e) => {
         if (!isDragging) return;
-        const currentX = event.pageX;
-        currentTranslate = currentX - startX;
-        setTranslate(currentTranslate);
+        const currentX = e.type.includes("mouse") ? e.pageX : e.touches[0].clientX;
+        const deltaX = currentX - startX;
+        currentTranslate = previousTranslate + deltaX;
+        track.style.transform = `translateX(${currentTranslate}px)`;
     };
 
-    const onMouseUp = () => {
-        if (!isDragging) return;
+    const handleTouchEnd = () => {
         isDragging = false;
-        enableTransition();
-        cardIndex = Math.round(Math.abs(currentTranslate) / cardWidth);
-        alignToCard(cardIndex);
-        autoPlayPaused = false; // Pausa o autoplay corretamente no "mouseup", mas será retomado quando o mouse sair
+        const movedBy = currentTranslate - previousTranslate;
+        if (movedBy < -50 && currentIndex < cards.length - 1) {
+            currentIndex += 1;
+        } else if (movedBy > 50 && currentIndex > 0) {
+            currentIndex -= 1;
+        }
+        track.style.transition = "transform 0.5s ease-in-out"; // Re-enable smooth transition
+        updateCarousel(currentIndex);
+
+        // Delay autoplay resumption to ensure smooth transition
+        autoplayTimeout = setTimeout(() => {
+            isAutoplayPaused = false;
+            startAutoplay();
+        }, 500);
     };
 
-    // Pausar o autoplay enquanto o mouse estiver sobre o carrossel
-    carousel.addEventListener('mouseenter', () => {
-        autoPlayPaused = true;
+    // Add event listeners for drag and touch
+    carousel.addEventListener("mousedown", handleTouchStart);
+    carousel.addEventListener("mousemove", handleTouchMove);
+    carousel.addEventListener("mouseup", handleTouchEnd);
+    carousel.addEventListener("mouseleave", () => {
+        if (isDragging) handleTouchEnd();
     });
 
-    // Retomar o autoplay quando o mouse sair
-    carousel.addEventListener('mouseleave', () => {
-        autoPlayPaused = false;
+    carousel.addEventListener("touchstart", handleTouchStart);
+    carousel.addEventListener("touchmove", handleTouchMove);
+    carousel.addEventListener("touchend", handleTouchEnd);
+
+    // Pause autoplay on mouse enter
+    carousel.addEventListener("mouseenter", stopAutoplay);
+    // Resume autoplay on mouse leave
+    carousel.addEventListener("mouseleave", startAutoplay);
+
+    // Start autoplay
+    startAutoplay();
+
+    // Adjust track width dynamically
+    const resizeObserver = new ResizeObserver(() => {
+        track.style.width = `${cards.length * cardWidth}px`;
+        updateCarousel(currentIndex);
     });
-
-    // Touch events for mobile
-    carousel.addEventListener('touchstart', (e) => onMouseDown(e.touches[0]));
-    window.addEventListener('touchmove', (e) => onMouseMove(e.touches[0]));
-    window.addEventListener('touchend', onMouseUp);
-
-    // Controla o arraste
-    carousel.addEventListener('mousedown', onMouseDown);
-    window.addEventListener('mousemove', onMouseMove);
-    window.addEventListener('mouseup', onMouseUp);
-
-    createIndicators(); // Cria os indicadores ao carregar
-    alignToCard(cardIndex); // Garante que o carrossel esteja na posição inicial
-    startAutoPlay(); // Inicia o auto-play
+    resizeObserver.observe(carousel);
 });
