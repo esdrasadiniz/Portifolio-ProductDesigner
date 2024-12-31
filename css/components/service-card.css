@@ -1,0 +1,114 @@
+/* Container principal */
+.service-card {
+    position: relative;
+    width: 416px;
+    height: 508px;
+    background-color: #6868684d;
+    backdrop-filter: blur(8px);
+    border-radius: 35px;
+    overflow: hidden;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1.5px solid rgba(255, 255, 255, 0.507);
+  }
+  
+  /* Pseudoelemento para criar o recorte */
+  .service-card::before {
+    content: "";
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 60px;
+    height: 60px;
+    background-color: #f4f4f4; /* Mesma cor do fundo */
+    border-radius: 50%; /* Faz o recorte circular */
+    z-index: 1;
+  }
+  
+  /* Conteúdo da card */
+  .content {
+    display: flex;
+    position: relative;
+    padding: 20px;
+    height: 100%;
+    box-sizing: border-box;
+    flex-direction: column;
+  }
+  
+  .content .title {
+    font-size: 32px;
+    color: white;
+    height: 100px;
+    line-height: 85px;
+    box-sizing: border-box;
+    padding-bottom: 11px;
+    
+  }
+
+  .content .title::after {
+    position: absolute;
+    top: 120px;
+    left: 0;
+    content: "";
+    border-bottom: 1.5px solid rgba(255, 255, 255, 0.507);
+    height: 0;
+    width: 100%;
+  }
+
+  
+  /* Ícone */
+  .icon {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #000;
+    border-radius: 50%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+  }
+  
+  .service-card .cards {
+    position: relative;
+    height: 100%;
+    z-index: 3;
+    display: flex;
+    justify-content: center;
+    align-items: end;
+    bottom: 0;
+  }
+
+  .service-card .cards .card1 {
+    position: absolute;
+    bottom: -20px;
+    width: 418px;
+    height: 307px;
+    z-index: 5;
+    background-image: url(../../assets/img/Rectangle\ 7.png);
+    border-radius: 35px;
+  }
+
+  .service-card .cards .card2 {
+    position: absolute;
+    bottom: 209px;
+    width: 375px;
+    height: 100px;
+    z-index: 4;
+    background-color: #747272a4;
+    backdrop-filter: blur(8px);
+    border-radius: 35px;
+  }
+
+  .service-card .cards .card3 {
+    position: absolute;
+    bottom: 230px;
+    width: 320px;
+    height: 100px;
+    z-index: 3;
+    background-color: #5f5e5e54;
+    backdrop-filter: blur(8px);
+    border-radius: 35px;
+  }

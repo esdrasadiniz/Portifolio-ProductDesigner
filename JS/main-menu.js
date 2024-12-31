@@ -1,29 +1,34 @@
-// Seleciona todos os botões do menu
-const menuButtons = document.querySelectorAll('.menu .menu-button');
-// Seleciona todas as seções
-const sections = document.querySelectorAll('section');
+window.addEventListener('scroll', function () {
+  let sections = document.querySelectorAll('section');
+  let links = document.querySelectorAll('.menu-button');
+  let menu = document.querySelector('.main-menu'); // Pega o menu
 
-// Configura o Intersection Observer
-const observerOptions = {
-  root: null, // Usa a viewport como root
-  threshold: 0.5, // A seção é considerada visível se 50% dela estiver na tela
-};
+  // Posição do menu
+  let menuRect = menu.getBoundingClientRect();
 
-// Função para observar as seções
-const observer = new IntersectionObserver((entries) => {
-  entries.forEach(entry => {
-    // Verifica se a seção está visível
-    if (entry.isIntersecting) {
-      // Remove a classe 'active' de todos os botões
-      menuButtons.forEach(button => button.classList.remove('active'));
-      // Adiciona a classe 'active' ao botão correspondente
-      const activeButton = document.querySelector(`.menu .menu-button[href="#${entry.target.id}"]`);
-      if (activeButton) {
-        activeButton.classList.add('active');
+  let maxVisibleArea = 0; // Armazenar a maior área visível da seção
+  let currentSectionIndex = -1; // Para armazenar o índice da seção ativa
+
+  sections.forEach(function (section, index) {
+      let rect = section.getBoundingClientRect();
+      
+      // Calcula a área visível da seção
+      let visibleHeight = Math.min(rect.bottom, window.innerHeight) - Math.max(rect.top, 0);
+
+      // Se a seção tem uma área visível maior que a anterior, essa será a nova ativa
+      if (visibleHeight > maxVisibleArea) {
+          maxVisibleArea = visibleHeight;
+          currentSectionIndex = index;
       }
-    }
   });
-}, observerOptions);
 
-// Observa cada seção
-sections.forEach(section => observer.observe(section));
+  // Remove a classe 'on-section' de todos os links
+  links.forEach(function (link) {
+      link.classList.remove('on-section');
+  });
+
+  // Adiciona a classe 'on-section' ao link correspondente à seção ativa
+  if (currentSectionIndex !== -1) {
+      links[currentSectionIndex].classList.add('on-section');
+  }
+});

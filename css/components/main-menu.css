@@ -19,6 +19,7 @@
     text-decoration: none;
     padding: 0 40px;
     border-radius: 50px;
+    transition: background-color 0.3s ease-in-out;
 }
 
 .main-menu .menu-button:hover {
@@ -31,5 +32,9 @@
 
 
 .main-menu .menu-button.active {
+    background-color: #FD853A;
+}
+
+.on-section {
     background-color: #FD853A;
 }
