@@ -4,6 +4,32 @@
     bottom: 0;
 }
 
+.-banner-section .banner-photoHover{
+    height: 720px;
+    position: absolute;
+    bottom: -22px;
+    left: 233px;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0.3s;
+}
+
+.-banner-section .banner-photoHover.show{
+    opacity: 1;
+    visibility: visible;
+    transition: opacity 0.3s ease-in-out, visibility 0s 0s;
+}
+
+.-banner-section .quote-up.up {
+    transform: translateY(-200px);
+    transition: transform 0.75s cubic-bezier(0.075, 0.82, 0.165, 1); /* Corrigido */
+}
+
+.-banner-section .experience-quote.up {
+    transform: translateY(-200px);
+    transition: transform 0.75s cubic-bezier(0.075, 0.82, 0.165, 1); /* Corrigido */
+}
+
 .-banner-section .main-title {
     position: absolute;
     z-index: -1;
@@ -24,6 +50,21 @@
     position: relative;
 }
 
+.pushReleaseToBottom { animation-name: pushReleaseToBottom }
+@keyframes pushReleaseToBottom {
+    30% { transform: translateY(-100px) }
+    to {
+        transform: translateY(100%);
+        opacity: 0;
+    }
+}
+
+.pushReleaseFromBottom { animation-name: pushReleaseFromBottom }
+@keyframes pushReleaseFromBottom {
+    from { transform: translateY(100%) }
+    30% { transform: translateY(-100px) }
+}
+
 .-banner-section .text-box::after {
     content: url(../../assets/img/Vector\ 1.png);
     position: absolute;
@@ -36,12 +77,16 @@
     position: absolute;
     left: 140px;
     top: 435px;
+    transform: translateY(0); /* Posição inicial */
+    transition: transform 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .-banner-section .experience-quote {
     position: absolute;
     right: 144px;
     top: 443px;
+    transform: translateY(0); /* Posição inicial */
+    transition: transform 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 
 .-banner-section .banner-nav {
